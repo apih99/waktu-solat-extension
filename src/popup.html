@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="color-scheme" content="dark">
+  <title>Waktu Solat</title>
+  <link rel="stylesheet" href="css/popup.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="logo-container">
+        <img src="images/icon48.png" alt="Waktu Solat Logo" class="logo">
+        <h1>Waktu Solat</h1>
+      </div>
+      <div class="date-location">
+        <p id="current-date"></p>
+        <p id="current-location"></p>
+      </div>
+    </header>
+    
+    <main>
+      <div class="prayer-times">
+        <div class="loading-spinner" id="loading-spinner">
+          <div class="spinner"></div>
+          <p>Loading prayer times...</p>
+        </div>
+        <ul id="prayer-list">
+          <!-- Prayer times will be populated here by JavaScript -->
+        </ul>
+      </div>
+    </main>
+    
+    <footer>
+      <button id="settings-btn" class="settings-btn">
+        <span class="gear-icon">⚙️</span> Settings
+      </button>
+      <a href="#" id="debug-link" class="debug-link" title="Prayer Time Validation Tool">Debug Mode</a>
+    </footer>
+  </div>
+
+  <!-- Settings Modal -->
+  <div id="settings-modal" class="modal">
+    <div class="modal-content">
+      <span class="close-btn">&times;</span>
+      <h2>Settings</h2>
+      
+      <div class="settings-section">
+        <h3>Location</h3>
+        <div class="location-input">
+          <select id="location-input" class="location-select">
+            <option value="">Loading zones...</option>
+          </select>
+          <button id="detect-location-btn">Detect My Location</button>
+        </div>
+      </div>
+      
+      <div class="settings-section">
+        <h3>Reminder Settings</h3>
+        <div class="reminder-time">
+          <label for="reminder-time-select">Remind me</label>
+          <select id="reminder-time-select">
+            <option value="5">5 minutes</option>
+            <option value="10">10 minutes</option>
+            <option value="15">15 minutes</option>
+            <option value="30">30 minutes</option>
+          </select>
+          <span>before prayer time</span>
+        </div>
+        
+        <div class="prayer-toggles">
+          <h4>Enable reminders for:</h4>
+          <div class="toggle-container">
+            <label class="toggle">
+              <input type="checkbox" id="subuh-toggle" checked>
+              <span class="toggle-label">Subuh</span>
+            </label>
+          </div>
+          <div class="toggle-container">
+            <label class="toggle">
+              <input type="checkbox" id="zuhur-toggle" checked>
+              <span class="toggle-label">Zuhur</span>
+            </label>
+          </div>
+          <div class="toggle-container">
+            <label class="toggle">
+              <input type="checkbox" id="asar-toggle" checked>
+              <span class="toggle-label">Asar</span>
+            </label>
+          </div>
+          <div class="toggle-container">
+            <label class="toggle">
+              <input type="checkbox" id="maghrib-toggle" checked>
+              <span class="toggle-label">Maghrib</span>
+            </label>
+          </div>
+          <div class="toggle-container">
+            <label class="toggle">
+              <input type="checkbox" id="isyak-toggle" checked>
+              <span class="toggle-label">Isyak</span>
+            </label>
+          </div>
+        </div>
+      </div>
+      
+      <div class="settings-actions">
+        <button id="save-settings-btn" class="primary-btn">Save Settings</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/popup.js"></script>
+</body>
+</html> 

@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Prayer Times Validation Tool</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: #f5f5f5;
+    }
+    h1, h2 {
+      color: #2c3e50;
+    }
+    .card {
+      background-color: white;
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    .form-group {
+      margin-bottom: 15px;
+    }
+    label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
+    input, select, button {
+      padding: 8px 12px;
+      border-radius: 4px;
+      border: 1px solid #ddd;
+      width: 100%;
+      box-sizing: border-box;
+    }
+    button {
+      background-color: #3498db;
+      color: white;
+      border: none;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    button:hover {
+      background-color: #2980b9;
+    }
+    .results {
+      white-space: pre-wrap;
+      font-family: monospace;
+      background-color: #f8f9fa;
+      padding: 15px;
+      border-radius: 4px;
+      border: 1px solid #ddd;
+      overflow-x: auto;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    th, td {
+      border: 1px solid #ddd;
+      padding: 8px;
+      text-align: left;
+    }
+    th {
+      background-color: #f2f2f2;
+    }
+    .error {
+      color: #e74c3c;
+      font-weight: bold;
+    }
+    .success {
+      color: #27ae60;
+      font-weight: bold;
+    }
+    .warning {
+      color: #f39c12;
+      font-weight: bold;
+    }
+    .info-box {
+      background-color: #d1ecf1;
+      color: #0c5460;
+      padding: 12px;
+      border-radius: 4px;
+      margin-bottom: 15px;
+      border-left: 4px solid #0c5460;
+    }
+  </style>
+</head>
+<body>
+  <h1>Prayer Times Validation Tool</h1>
+  
+  <div class="card">
+    <h2>Test Configuration</h2>
+    <div class="info-box">
+      <strong>Note about dates:</strong> The API might return prayer times for future dates.
+      This tool now properly handles these cases. If you see timestamps from different dates than expected,
+      don't worry - the tool will note this but still validate the sequence and reasonableness of times.
+    </div>
+    <div class="form-group">
+      <label for="zone">Zone Code</label>
+      <input type="text" id="zone" placeholder="e.g. SGR01, JHR01, etc." value="SGR01">
+    </div>
+    <div class="form-group">
+      <button id="testButton">Validate Prayer Times</button>
+    </div>
+  </div>
+  
+  <div class="card">
+    <h2>API Response</h2>
+    <div id="apiResponse" class="results">Results will appear here...</div>
+  </div>
+  
+  <div class="card">
+    <h2>Prayer Times</h2>
+    <table id="prayerTable">
+      <thead>
+        <tr>
+          <th>Prayer</th>
+          <th>API Time</th>
+          <th>Raw Timestamp</th>
+          <th>Validation</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Table will be filled by JavaScript -->
+      </tbody>
+    </table>
+  </div>
+  
+  <div class="card">
+    <h2>Validation Results</h2>
+    <div id="validationResults" class="results">Validation results will appear here...</div>
+  </div>
+  
+  <div class="card">
+    <h2>Reference Information</h2>
+    <p>Common Malaysia zones:</p>
+    <ul>
+      <li>SGR01 - Kuala Lumpur</li>
+      <li>JHR01 - Johor Bahru</li>
+      <li>KDH01 - Alor Setar</li>
+      <li>KTN01 - Kota Bharu</li>
+      <li>MLK01 - Melaka</li>
+      <li>NGS01 - Seremban</li>
+      <li>PHG01 - Kuantan</li>
+      <li>PLS01 - Kangar</li>
+      <li>PNG01 - Georgetown</li>
+      <li>PRK01 - Ipoh</li>
+      <li>SBH01 - Kota Kinabalu</li>
+      <li>SWK01 - Kuching</li>
+      <li>TRG01 - Kuala Terengganu</li>
+    </ul>
+  </div>
+  
+  <script src="js/debug-prayer-times.js"></script>
+</body>
+</html> 

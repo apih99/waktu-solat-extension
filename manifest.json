@@ -1,0 +1,53 @@
+{
+  "manifest_version": 3,
+  "name": "Waktu Solat",
+  "version": "1.0.0",
+  "description": "Track daily prayer times with customizable reminders",
+  "permissions": [
+    "storage",
+    "notifications",
+    "geolocation",
+    "alarms",
+    "tabs"
+  ],
+  "host_permissions": [
+    "https://api.waktusolat.app/*",
+    "https://nominatim.openstreetmap.org/*"
+  ],
+  "background": {
+    "service_worker": "src/js/background.js",
+    "type": "module"
+  },
+  "action": {
+    "default_popup": "src/popup.html",
+    "default_icon": {
+      "16": "images/icon16.png",
+      "19": "images/icon19.png",
+      "38": "images/icon38.png",
+      "48": "images/icon48.png",
+      "128": "images/icon128.png"
+    }
+  },
+  "icons": {
+    "16": "images/icon16.png",
+    "19": "images/icon19.png",
+    "38": "images/icon38.png",
+    "48": "images/icon48.png",
+    "128": "images/icon128.png"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["audio/notification.wav", "src/debug-prayer-times.html"],
+      "matches": ["<all_urls>"]
+    }
+  ],
+  "commands": {
+    "_execute_action": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+Y",
+        "mac": "Command+Shift+P"
+      },
+      "description": "Open Waktu Solat"
+    }
+  }
+} 
