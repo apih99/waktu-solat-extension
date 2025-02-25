@@ -382,16 +382,56 @@ async function loadSettings() {
 
 // Save settings to Chrome storage
 async function saveSettings() {
-  return new Promise((resolve) => {
-    chrome.storage.sync.set({ settings: currentSettings }, () => {
-      if (chrome.runtime.lastError) {
-        console.error('Error saving settings:', chrome.runtime.lastError);
-      } else {
-        console.log('Settings saved successfully');
+  try {
+    const zoneCode = locationInput.value.trim();
+    
+    // Validate zone code if zones are available
+    if (availableZones.length > 0 && !isValidZone(zoneCode)) {
+      alert(`"${zoneCode}" is not a valid zone code. Please select a valid zone from the list.`);
+      return;
+    }
+    
+    // Update settings object
+    currentSettings.location = zoneCode;
+    currentSettings.reminderTime = parseInt(reminderTimeSelect.value, 10);
+    
+    for (const prayer in prayerToggles) {
+      if (prayerToggles[prayer]) {
+        currentSettings.enabledPrayers[prayer] = prayerToggles[prayer].checked;
       }
-      resolve();
+    }
+    
+    // Save settings to storage
+    await new Promise((resolve) => {
+      chrome.storage.sync.set({ settings: currentSettings }, () => {
+        if (chrome.runtime.lastError) {
+          console.error('Error saving settings:', chrome.runtime.lastError);
+        } else {
+          console.log('Settings saved successfully');
+        }
+        resolve();
+      });
     });
-  });
+    
+    // Update UI
+    updateLocationDisplay();
+    await fetchPrayerTimes();
+    
+    // Close modal
+    settingsModal.style.display = 'none';
+    
+    // Notify background script about settings change
+    chrome.runtime.sendMessage({ type: 'SETTINGS_UPDATED' }, (response) => {
+      if (chrome.runtime.lastError) {
+        console.error('Error sending message to background script:', chrome.runtime.lastError);
+      } else {
+        console.log('Settings update message sent to background script');
+      }
+    });
+  } catch (error) {
+    console.error('Error saving settings:', error);
+    alert(`Failed to save settings: ${error.message}`);
+  }
 }
 
 // Fetch available zones from API
