@@ -92,6 +92,19 @@ h1 {
   color: var(--text-light);
 }
 
+#islamic-date {
+  color: var(--primary-color);
+  font-style: italic;
+  margin-top: 2px;
+  margin-bottom: 6px;
+  font-size: 13px;
+  font-weight: 500;
+  background-color: rgba(248, 195, 1, 0.1);
+  padding: 2px 8px;
+  border-radius: 4px;
+  display: inline-block;
+}
+
 /* Main Content Styles */
 main {
   margin-bottom: 20px;

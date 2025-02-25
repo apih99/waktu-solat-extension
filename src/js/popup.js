@@ -1,5 +1,6 @@
 // DOM Elements
 const currentDateElement = document.getElementById('current-date');
+const islamicDateElement = document.getElementById('islamic-date');
 const currentLocationElement = document.getElementById('current-location');
 const prayerListElement = document.getElementById('prayer-list');
 const loadingSpinner = document.getElementById('loading-spinner');
@@ -312,6 +313,11 @@ document.addEventListener('DOMContentLoaded', async () => {
     // Set current date
     updateCurrentDate();
     
+    // Clear the Islamic date (will be populated when API responds)
+    if (islamicDateElement) {
+      islamicDateElement.textContent = '';
+    }
+    
     // Load settings
     await loadSettings();
     
@@ -348,6 +354,53 @@ function updateCurrentDate() {
   const now = new Date();
   const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
   currentDateElement.textContent = now.toLocaleDateString('en-MY', options);
+}
+
+// Display the Islamic (Hijri) date
+function displayIslamicDate(hijriDate) {
+  if (!hijriDate || !islamicDateElement) {
+    console.log('Cannot display Islamic date - hijriDate or element missing', { hijriDate, element: !!islamicDateElement });
+    return;
+  }
+  
+  console.log('Trying to display Islamic date:', hijriDate);
+  
+  try {
+    // The date might be in different formats
+    let year, month, day;
+    
+    if (hijriDate.includes('-')) {
+      // Format like "1446-08-02"
+      [year, month, day] = hijriDate.split('-').map(num => parseInt(num, 10));
+    } else {
+      // Try to parse directly
+      console.log('Hijri date is not in expected format, using as-is');
+      islamicDateElement.textContent = hijriDate;
+      return;
+    }
+    
+    console.log('Parsed hijri date:', { year, month, day });
+    
+    // Array of Islamic month names
+    const islamicMonths = [
+      'Muharram', 'Safar', 'Rabi al-Awwal', 'Rabi al-Thani', 
+      'Jumada al-Awwal', 'Jumada al-Thani', 'Rajab', 'Sha\'ban',
+      'Ramadan', 'Shawwal', 'Dhu al-Qi\'dah', 'Dhu al-Hijjah'
+    ];
+    
+    // Format the Islamic date (e.g., "2 Ramadan 1446H")
+    if (month >= 1 && month <= 12) {
+      const formattedIslamicDate = `${day} ${islamicMonths[month - 1]} ${year}H`;
+      islamicDateElement.textContent = formattedIslamicDate;
+      console.log(`Islamic date displayed: ${formattedIslamicDate}`);
+    } else {
+      console.error('Invalid Islamic month number:', month);
+      islamicDateElement.textContent = hijriDate; // Fallback to raw format
+    }
+  } catch (error) {
+    console.error('Error displaying Islamic date:', error);
+    islamicDateElement.textContent = hijriDate; // Fallback to raw format
+  }
 }
 
 // Load settings from Chrome storage
@@ -648,6 +701,11 @@ async function fetchPrayerTimes() {
     if (!todayPrayers) {
       todayPrayers = data.prayers[0];
       console.warn(`Could not find prayer times for day ${currentDay}, falling back to day ${data.prayers[0].day}`);
+    }
+    
+    // Display Islamic date if available
+    if (todayPrayers.hijri) {
+      displayIslamicDate(todayPrayers.hijri);
     }
     
     // Convert Unix timestamps to formatted time strings

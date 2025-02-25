@@ -94,7 +94,7 @@ async function fetchPrayerTimes() {
   try {
     const zone = encodeURIComponent(currentSettings.location);
     
-    // Add today's date to the API request
+    // Format today's date for the API request
     const today = new Date();
     const formattedDate = `${today.getFullYear()}-${(today.getMonth()+1).toString().padStart(2,'0')}-${today.getDate().toString().padStart(2,'0')}`;
     const apiUrl = `${API_BASE_URL}/${zone}?date=${formattedDate}`;
@@ -190,7 +190,7 @@ async function fetchPrayerTimes() {
 // Fetch prayer times from GPS coordinates
 async function fetchPrayerTimesFromGPS(latitude, longitude) {
   try {
-    // Add today's date to the API request
+    // Format today's date for the API request
     const today = new Date();
     const formattedDate = `${today.getFullYear()}-${(today.getMonth()+1).toString().padStart(2,'0')}-${today.getDate().toString().padStart(2,'0')}`;
     const apiUrl = `${API_GPS_URL}/${latitude}/${longitude}?date=${formattedDate}`;
