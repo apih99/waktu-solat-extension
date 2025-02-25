@@ -33,7 +33,7 @@ A Chrome extension to help users track daily prayer times based on their locatio
    - Change your location
    - Adjust reminder time
    - Toggle specific prayer reminders
-4. Use the keyboard shortcut `Ctrl+Shift+P` (or `Command+Shift+P` on Mac) to quickly open the extension
+4. Use the keyboard shortcut `Ctrl+Shift+Y` (or `Command+Shift+Y` on Mac) to quickly open the extension
 
 ## API Integration
 
